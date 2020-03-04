@@ -22,12 +22,15 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    compile('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok') // 왜 이걸 넣으니까 될가용
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // ADD
     compile 'org.apache.commons:commons-csv:1.8'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+
 
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
