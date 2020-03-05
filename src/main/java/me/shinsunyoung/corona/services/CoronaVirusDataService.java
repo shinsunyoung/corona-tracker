@@ -26,7 +26,7 @@ public class CoronaVirusDataService {
 
 
     @PostConstruct
-    @Scheduled(cron = "* 0 * * * *") // 초 분 시 일 월 년
+    @Scheduled(cron = "0 0 * * * *") // 초 분 시 일 월 년
     public List<LocationStats> fetchVirusData() throws IOException {
 
         List<LocationStats> newStats = new ArrayList<>();
