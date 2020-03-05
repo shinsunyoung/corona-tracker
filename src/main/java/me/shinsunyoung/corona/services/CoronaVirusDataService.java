@@ -27,7 +27,7 @@ public class CoronaVirusDataService {
 
     @PostConstruct
     @Scheduled(cron = "* 0 * * * *") // 초 분 시 일 월 년
-    public void fetchVirusData() throws IOException {
+    public List<LocationStats> fetchVirusData() throws IOException {
 
         List<LocationStats> newStats = new ArrayList<>();
 
@@ -48,10 +48,14 @@ public class CoronaVirusDataService {
 
         for (CSVRecord record : records) {
 
+            int latestTotalCases = Integer.parseInt(record.get(record.size() - 1));
+            int prevTotalCases = Integer.parseInt(record.get(record.size() - 2));
+
             LocationStats locationStats = LocationStats.builder()
                     .state(record.get("Province/State"))
                     .country(record.get("Country/Region"))
-                    .latestTotalCases(Integer.parseInt(record.get(record.size() - 1)))
+                    .latestTotalCases(latestTotalCases)
+                    .diffFromPrevDay(latestTotalCases-prevTotalCases)
                     .build();
 
             System.out.println(locationStats.toString());
@@ -60,6 +64,7 @@ public class CoronaVirusDataService {
 
         }
 
+        return newStats;
 
     }
 }

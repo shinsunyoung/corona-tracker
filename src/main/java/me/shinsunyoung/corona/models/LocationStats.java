@@ -11,6 +11,7 @@ public class LocationStats {
 
     private String state;
     private String country;
-    private int latestTotalCases;
+    private int latestTotalCases; // 오늘
+    private int diffFromPrevDay; // 증가량
 
 }
