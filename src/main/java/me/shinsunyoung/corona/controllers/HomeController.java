@@ -16,7 +16,7 @@ public class HomeController {
 
     private final CoronaVirusDataService coronaVirusDataService;
 
-    @GetMapping("/")
+    @GetMapping("/global")
     public String home(Model model) throws IOException {
 
         List<LocationStats> allStats = coronaVirusDataService.fetchVirusData();

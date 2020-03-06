@@ -2,8 +2,15 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>COVID-19 tracker</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <style>
+        .korea {
+            background-color: yellow;
+        }
+    </style>
+
 </head>
 <body>
 
@@ -31,7 +38,7 @@
             <th>Total cases reported</th>
             <th>Changes since last day</th>
         </tr>
-        <tr th:each = "locationStat : ${locationStats} ">
+        <tr th:each = "locationStat : ${locationStats} " th:class = "${locationStat.country} == 'South Korea' ? 'korea' : '' ">
             <td th:text = "${locationStat.state}"> </td>
             <td th:text = "${locationStat.country}"> </td>
             <td th:text = "${locationStat.latestTotalCases}">0</td>
