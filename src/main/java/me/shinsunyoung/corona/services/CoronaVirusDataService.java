@@ -1,5 +1,6 @@
 package me.shinsunyoung.corona.services;
 
+import me.shinsunyoung.corona.models.KoreaStats;
 import me.shinsunyoung.corona.models.LocationStats;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -9,11 +10,16 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.tomcat.jni.Local;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
+import java.nio.IntBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +29,11 @@ import java.util.List;
 public class CoronaVirusDataService {
 
     private static String VIRUS_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv";
+    private static String KOREA_COVID_DATAS_URL = "http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=1&brdGubun=13";
 
 
-    @PostConstruct
-    @Scheduled(cron = "0 0 * * * *") // 초 분 시 일 월 년
+    //@PostConstruct
+    //@Scheduled(cron = "0 0 * * * *") // 초 분 시 일 월 년
     public List<LocationStats> fetchVirusData() throws IOException {
 
         List<LocationStats> newStats = new ArrayList<>();
@@ -58,7 +65,7 @@ public class CoronaVirusDataService {
                     .diffFromPrevDay(latestTotalCases-prevTotalCases)
                     .build();
 
-            System.out.println(locationStats.toString());
+            //System.out.println(locationStats.toString());
 
             newStats.add(locationStats);
 
@@ -67,4 +74,32 @@ public class CoronaVirusDataService {
         return newStats;
 
     }
+
+    @PostConstruct
+    public List<KoreaStats> getKoreaCovidDatas() throws IOException {
+
+        List<KoreaStats> koreaStatsList = new ArrayList<>();
+        Document doc = Jsoup.connect(KOREA_COVID_DATAS_URL).get();
+        Elements contents = doc.select("table tr");
+
+        for(int i=2; i<contents.size(); i++){
+
+            Elements tdContents = contents.get(i).select("td");
+
+            KoreaStats koreaStats = KoreaStats.builder()
+                    .country(contents.get(i).select("th[scope=row]").text())
+                    .diffFromPrevDay(Integer.parseInt(tdContents.get(0).text()))
+                    .total(Integer.parseInt(tdContents.get(1).text()))
+                    .death(Integer.parseInt(tdContents.get(2).text()))
+                    .incidence(Double.parseDouble(tdContents.get(3).text()))
+                    .inspection(Integer.parseInt(tdContents.get(4).text()))
+                    .build();
+
+            koreaStatsList.add(koreaStats);
+        }
+
+        return koreaStatsList;
+
+    }
+
 }
