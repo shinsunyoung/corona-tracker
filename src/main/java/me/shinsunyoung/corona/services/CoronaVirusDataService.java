@@ -75,19 +75,19 @@ public class CoronaVirusDataService {
 
     }
 
-    //@PostConstruct
+    @PostConstruct
     public List<KoreaStats> getKoreaCovidDatas() throws IOException {
 
         List<KoreaStats> koreaStatsList = new ArrayList<>();
         Document doc = Jsoup.connect(KOREA_COVID_DATAS_URL).get();
-        Elements contents = doc.select("table tr");
 
-        for(int i=2; i<contents.size(); i++){
+        Elements contents = doc.select("table tbody tr");
 
-            Elements tdContents = contents.get(i).select("td");
+        for(Element content : contents){
+            Elements tdContents = content.select("td");
 
             KoreaStats koreaStats = KoreaStats.builder()
-                    .country(contents.get(i).select("th[scope=row]").text())
+                    .country(content.select("th").text())
                     .diffFromPrevDay(Integer.parseInt(tdContents.get(0).text()))
                     .total(Integer.parseInt(tdContents.get(1).text()))
                     .death(Integer.parseInt(tdContents.get(2).text()))

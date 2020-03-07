@@ -29,7 +29,7 @@
             <th>확진환자수(전일 대비 증감량)</th>
             <th>사망자</th>
             <th>일일 검사건수</th>
-            <th title = "인구 10만 명당">발생률</th>
+            <th title = "인구 10만 명당">발생률(*)</th>
         </tr>
         <tr th:each = "stat : ${koreaStats} ">
             <td th:text = "${stat.country}"> </td>
@@ -39,11 +39,7 @@
             <td th:text = "${stat.incidence}">0</td>
         </tr>
     </table>
-
-
-
 </div>
-
 
 </body>
 </html>

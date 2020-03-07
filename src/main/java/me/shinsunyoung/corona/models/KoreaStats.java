@@ -9,13 +9,13 @@ import lombok.ToString;
 @Getter
 public class KoreaStats {
 
-    private String country;
+    private String country; // 시도명
 
-    private int diffFromPrevDay;
+    private int diffFromPrevDay; // 전일대비확진환자증감
 
-    private int total;
+    private int total; // 확진환자수
 
-    private int death;
+    private int death; // 사망자수
 
     private double incidence; // 발병률
 
