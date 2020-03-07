@@ -17,7 +17,7 @@ public class HomeController {
     private final CoronaVirusDataService coronaVirusDataService;
 
     @GetMapping("/global")
-    public String home(Model model) throws IOException {
+    public String global(Model model) throws IOException {
 
         List<LocationStats> allStats = coronaVirusDataService.fetchVirusData();
 
@@ -28,7 +28,14 @@ public class HomeController {
         model.addAttribute("totalReportedCases", totalCases);
         model.addAttribute("totalNewCases", totalNewCases);
 
-        return "home";
+        return "global";
+    }
+
+    @GetMapping("/korea")
+    public String korea(Model model){
+
+        return "korea";
+
     }
 
 }

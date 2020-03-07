@@ -75,7 +75,7 @@ public class CoronaVirusDataService {
 
     }
 
-    @PostConstruct
+    //@PostConstruct
     public List<KoreaStats> getKoreaCovidDatas() throws IOException {
 
         List<KoreaStats> koreaStatsList = new ArrayList<>();
