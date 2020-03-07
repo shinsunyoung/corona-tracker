@@ -3,6 +3,8 @@ package me.shinsunyoung.corona.services;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.shinsunyoung.corona.models.KoreaStats;
 import me.shinsunyoung.corona.models.LocationStats;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +37,20 @@ public class CoronaVirusDataServiceTest {
         assertThat(coronaList.get(0).getState()).isEqualTo("Anhui");
         assertThat(coronaList.get(0).getLatestTotalCases()).isGreaterThan(0);
         assertThat(coronaList.get(0).getCountry()).isEqualTo("Mainland China");
+    }
+
+    @Test
+    public void getKoreaCovidDatas_동작테스트() throws IOException {
+
+        // given
+        List<KoreaStats> coronaList = new ArrayList<>();
+
+        // when
+        coronaList = coronaVirusDataService.getKoreaCovidDatas();
+
+        // then
+        assertThat(coronaList.get(0).getCountry()).isEqualTo("합계");
+        assertThat(coronaList.get(0).getTotal()).isGreaterThan(0);
 
     }
 

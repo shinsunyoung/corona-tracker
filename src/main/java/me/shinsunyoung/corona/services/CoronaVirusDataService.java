@@ -55,8 +55,8 @@ public class CoronaVirusDataService {
 
         for (CSVRecord record : records) {
 
-            int latestTotalCases = Integer.parseInt(record.get(record.size() - 1));
-            int prevTotalCases = Integer.parseInt(record.get(record.size() - 2));
+            int latestTotalCases = record.get(record.size() - 1).isEmpty() ? 0 : Integer.parseInt(record.get(record.size() - 1));
+            int prevTotalCases = record.get(record.size() - 2).isEmpty() ? 0 : Integer.parseInt(record.get(record.size() - 2));
 
             LocationStats locationStats = LocationStats.builder()
                     .state(record.get("Province/State"))
