@@ -1,6 +1,7 @@
 package me.shinsunyoung.corona.controllers;
 
 import lombok.RequiredArgsConstructor;
+import me.shinsunyoung.corona.models.KoreaStats;
 import me.shinsunyoung.corona.models.LocationStats;
 import me.shinsunyoung.corona.services.CoronaVirusDataService;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,11 @@ public class HomeController {
     }
 
     @GetMapping("/korea")
-    public String korea(Model model){
+    public String korea(Model model) throws IOException {
+
+        List<KoreaStats> koreaStatsList = coronaVirusDataService.getKoreaCovidDatas();
+
+        model.addAttribute("koreaStats", koreaStatsList);
 
         return "korea";
 

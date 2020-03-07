@@ -19,6 +19,6 @@ public class KoreaStats {
 
     private double incidence; // 발병률
 
-    private double inspection; // 일일 검사환자 수
+    private int inspection; // 일일 검사환자 수
 
 }
