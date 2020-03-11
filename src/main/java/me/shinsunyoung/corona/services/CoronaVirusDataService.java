@@ -92,7 +92,7 @@ public class CoronaVirusDataService {
                     .total(Integer.parseInt(tdContents.get(1).text()))
                     .death(Integer.parseInt(tdContents.get(2).text()))
                     .incidence(Double.parseDouble(tdContents.get(3).text()))
-                    .inspection(Integer.parseInt(tdContents.get(4).text()))
+                    .inspection(Double.parseDouble(tdContents.get(4).text()))
                     .build();
 
             koreaStatsList.add(koreaStats);
